@@ -126,7 +126,7 @@ export function PricingTable({
 
     return (
         <div className="w-full flex justify-center">
-            <div className="w-[75%] px-32 mt-6">
+            <div className="lg:w-[60%] w-[90%] px-12 mt-6">
                 <div className="w-full flex items-center py-4 justify-end">
                     <Select
                         onValueChange={handleSelectionChange}
