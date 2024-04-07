@@ -19,7 +19,7 @@ const MedGas = () => {
         queryKey: ["gasData", currentPage, selectedSort],
         queryFn: () =>
             fetch(
-                `http://localhost:3000/medgas/getAll?page=${currentPage}&pageSize=7&sortOrder=${selectedSort}`
+                `https://rns-id.vercel.app/medgas/getAll?page=${currentPage}&pageSize=7&sortOrder=${selectedSort}`
             ).then((res) => res.json()),
     });
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { MedGas } from "../model/medgas.model";
 import { EType } from "../store/enum/type.enum";
-import { savePricingData } from "../utils/scraper";
+import { savePricingData, scrapePricingData } from "../utils/scraper";
 // Function to get all MedGas documents
 export async function getAllMedGas(req: Request, res: Response) {
     try {
@@ -37,10 +37,20 @@ export async function getAllMedGas(req: Request, res: Response) {
 // Function to create a new MedGas document
 export async function currentMedGasEntry(req: Request, res: Response) {
     try {
+        const { nAVAXPrice, usdPrice } = await scrapePricingData();
+        console.log("Fetched new Med Gas Price:", nAVAXPrice, usdPrice);
+        const newMedGas = new MedGas({
+            createdAt: Date.now(),
+            nAVAXPrice,
+            usdPrice,
+            type: EType.USER,
+        });
+
+        await newMedGas.save();
         // Create a new MedGas document
-        const newMedGas = await savePricingData(EType.USER);
-        // Respond back with the created document
-        console.log(newMedGas);
+        // const newMedGas = await savePricingData(EType.USER);
+        // // Respond back with the created document
+        // console.log(newMedGas);
         res.status(201).json(newMedGas);
     } catch (error: any) {
         res.status(500).send(error.message);

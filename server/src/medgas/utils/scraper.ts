@@ -3,7 +3,7 @@ import cron from "node-cron";
 import { MedGas } from "../model/medgas.model";
 import { EType } from "../store/enum/type.enum";
 
-async function scrapePricingData() {
+export async function scrapePricingData() {
     try {
         const url = "https://snowtrace.io";
         const browser = await puppeteer.launch();
