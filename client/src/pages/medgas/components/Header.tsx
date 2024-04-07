@@ -12,7 +12,7 @@ const Header = ({ gasData, refetchAllGas }: any) => {
     const { data: currentGasData } = useQuery({
         queryKey: ["currentGasData"],
         queryFn: () =>
-            fetch(`http://localhost:3000/medgas/fetchCurrent`).then((res) =>
+            fetch(`https://rns-id.vercel.app/medgas/fetchCurrent`).then((res) =>
                 res.json()
             ),
         enabled: fetchCurrent,

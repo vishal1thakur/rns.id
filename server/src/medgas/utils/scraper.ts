@@ -2,11 +2,23 @@ import puppeteer from "puppeteer";
 import cron from "node-cron";
 import { MedGas } from "../model/medgas.model";
 import { EType } from "../store/enum/type.enum";
+import chromium from "chrome-aws-lambda";
 
 export async function scrapePricingData() {
     try {
         const url = "https://snowtrace.io";
-        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch();
+        const browser = await chromium.puppeteer.launch({
+            args: [
+                ...chromium.args,
+                "--hide-scrollbars",
+                "--disable-web-security",
+            ],
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath,
+            headless: true,
+            ignoreHTTPSErrors: true,
+        });
         const page = await browser.newPage();
 
         await page.goto(url, { waitUntil: "networkidle0" });
