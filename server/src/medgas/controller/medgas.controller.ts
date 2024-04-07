@@ -47,7 +47,7 @@ export async function currentMedGasEntry(req: Request, res: Response) {
         });
 
         await newMedGas.save();
-        // Create a new MedGas document
+        // Create a new MedGas document new
         // const newMedGas = await savePricingData(EType.USER);
         // // Respond back with the created document
         // console.log(newMedGas);
