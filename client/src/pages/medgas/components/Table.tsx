@@ -33,6 +33,7 @@ import {
 import moment from "moment";
 
 import { EType } from "../enums/type.enum";
+import { CircularLoader } from "@/components/ui/CircularProgress";
 
 export type GasEntry = {
     createdAt: Date;
@@ -145,7 +146,12 @@ export function PricingTable({
                     </Select>
                 </div>
                 {gasLoading ? (
-                    <></>
+                    <div className="w-full h-96 flex flex-col items-center justify-center">
+                        <CircularLoader.spinner className="h-4 w-4 animate-spin" />
+                        <h2 className="text-md  font-semibold mt-3">
+                            Loading...
+                        </h2>
+                    </div>
                 ) : (
                     <>
                         <div className="rounded-md border">

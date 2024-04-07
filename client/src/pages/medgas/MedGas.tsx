@@ -30,12 +30,14 @@ const MedGas = () => {
     useEffect(() => {
         if (gasData) {
             setTotalPages(Math.ceil(gasData.totalCount / 7));
-            toast({
-                title: `Medium Gas Price: ${gasData.data[0].nAVAXPrice} (${gasData.data[0].usdPrice})`,
-                description: moment(gasData.data[0].createdAt).format(
-                    "dddd, MMMM DD, YYYY at hh:mm A"
-                ),
-            });
+            if (currentPage === 1) {
+                toast({
+                    title: `Medium Gas Price: ${gasData.data[0].nAVAXPrice} (${gasData.data[0].usdPrice})`,
+                    description: moment(gasData.data[0].createdAt).format(
+                        "dddd, MMMM DD, YYYY at hh:mm A"
+                    ),
+                });
+            }
         }
     }, [gasData]);
 

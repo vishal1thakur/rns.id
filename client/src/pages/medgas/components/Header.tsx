@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import moment from "moment";
+import { CircularLoader } from "@/components/ui/CircularProgress";
 
-const Header = ({ gasData, refetchAllGas }: any) => {
+const Header = ({ gasData, refetchAllGas, gasLoading }: any) => {
     const { toast } = useToast();
     const [nextFetchIn, setNextFetchIn] = useState("");
     const [fetchCurrent, setFetchCurrent] = useState(false);
@@ -72,10 +73,15 @@ const Header = ({ gasData, refetchAllGas }: any) => {
                 <h2 className="text-md text-white font-semibold">
                     Medium Gas Prices
                 </h2>
+
                 <Separator className="h-8 w-[0.5px]" orientation="vertical" />
-                <h2 className="text-md text-white font-semibold">
-                    {nextFetchIn}
-                </h2>
+                {gasLoading ? (
+                    <CircularLoader.spinner className="h-4 w-4 animate-spin text-white" />
+                ) : (
+                    <h2 className="text-md text-white font-semibold">
+                        {nextFetchIn}
+                    </h2>
+                )}
             </div>
             {import.meta.env.VITE_ENVIRONMENT === "DEV" && (
                 <div className="flex space-x-8">
