@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import { MedGas } from "../model/medgas.model";
 import { EType } from "../store/enum/type.enum";
 import { savePricingData } from "../utils/scraper";
-// Function to get all MedGas documents
+/**function to get all med gas prices
+ * @input request param : first,skip,sort
+ */
 export async function getAllMedGas(req: Request, res: Response) {
     try {
         const page = parseInt(req.query.page as string) || 1;
@@ -34,12 +36,12 @@ export async function getAllMedGas(req: Request, res: Response) {
     }
 }
 
-// Function to create a new MedGas document
+/**function to get current med gas price
+ *
+ */
 export async function currentMedGasEntry(req: Request, res: Response) {
     try {
-        // Create a new MedGas document
         const newMedGas = savePricingData(EType.USER);
-        // Respond back with the created document
         res.status(201).json(newMedGas);
     } catch (error: any) {
         res.status(500).send(error.message);

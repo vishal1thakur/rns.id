@@ -85,12 +85,11 @@ export function PricingTable({
 
     function handlePageChange(newPage: number) {
         setCurrentPage(newPage);
-        // Here, you might also call your API to fetch data for the newPage
     }
 
     function generatePageNumbers(currentPage: any, totalPages: any) {
         let pageNumbers = [];
-        const pagesToShow = 3; // Number of pages to show before and after the current page
+        const pagesToShow = 3;
         let startPage = Math.max(2, currentPage - pagesToShow);
         let endPage = Math.min(totalPages - 1, currentPage + pagesToShow);
 

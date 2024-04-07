@@ -58,7 +58,7 @@ async function scrapePricingData() {
 export async function savePricingData(type: EType) {
     try {
         const { nAVAXPrice, usdPrice } = await scrapePricingData();
-        console.log("Fetched new Med Gas Price:", nAVAXPrice, usdPrice);
+
         const newMedGas = new MedGas({
             createdAt: Date.now(),
             nAVAXPrice,
@@ -70,7 +70,6 @@ export async function savePricingData(type: EType) {
         if (type === EType.USER) {
             return newMedGas;
         }
-        console.log("Saved new Med Gas Price:", nAVAXPrice, usdPrice);
     } catch (error) {
         console.error("Error saving pricing data:", error);
     }
