@@ -27,3 +27,5 @@ connectToMongoDB()
         });
     })
     .catch(console.error);
+
+export default app;
