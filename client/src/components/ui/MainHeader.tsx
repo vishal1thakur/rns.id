@@ -16,21 +16,36 @@ const MainHeader = () => {
                     <img src={logo} className="App-logo" alt="logo" />
                 </a>
             </div>
-
-            <Button
-                variant="secondary"
-                className="text-xs text-gray-500 font-semibold"
-                onClick={() =>
-                    window.open(
-                        "https://google.com",
-                        "_blank",
-                        "noopener,noreferrer"
-                    )
-                }
-            >
-                Made By: Vishal Thakur
-                <OpenInNewIcon sx={{ fontSize: 12, ml: 0.5 }} />
-            </Button>
+            <div>
+                <Button
+                    variant="secondary"
+                    className="text-xs text-gray-500 font-semibold mr-3"
+                    onClick={() =>
+                        window.open(
+                            "https://github.com/vishal1thakur/rns.id",
+                            "_blank",
+                            "noopener,noreferrer"
+                        )
+                    }
+                >
+                    Code
+                    <OpenInNewIcon sx={{ fontSize: 12, ml: 0.5 }} />
+                </Button>
+                <Button
+                    variant="secondary"
+                    className="text-xs text-gray-500 font-semibold"
+                    onClick={() =>
+                        window.open(
+                            "https://drive.google.com/file/d/1vkGPuikSYpEQhFpmibr1Q-meqMKwLjzU/view",
+                            "_blank",
+                            "noopener,noreferrer"
+                        )
+                    }
+                >
+                    Resume
+                    <OpenInNewIcon sx={{ fontSize: 12, ml: 0.5 }} />
+                </Button>
+            </div>
         </header>
     );
 };
