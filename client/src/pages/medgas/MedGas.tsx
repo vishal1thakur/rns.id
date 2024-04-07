@@ -10,6 +10,10 @@ const MedGas = () => {
     const [totalPages, setTotalPages] = useState(10);
     const [selectedSort, setSelectedSort] = useState("desc");
     const { toast } = useToast();
+    const gasUrl =
+        import.meta.env.VITE_ENVIRONMENT === "DEV"
+            ? import.meta.env.VITE_DEV_URL
+            : import.meta.env.VITE_PROD_URL;
 
     const {
         data: gasData,
@@ -19,7 +23,7 @@ const MedGas = () => {
         queryKey: ["gasData", currentPage, selectedSort],
         queryFn: () =>
             fetch(
-                `https://rns-id.vercel.app/medgas/getAll?page=${currentPage}&pageSize=7&sortOrder=${selectedSort}`
+                `${gasUrl}/medgas/getAll?page=${currentPage}&pageSize=7&sortOrder=${selectedSort}`
             ).then((res) => res.json()),
     });
 

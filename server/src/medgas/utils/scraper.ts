@@ -2,23 +2,12 @@ import puppeteer from "puppeteer";
 import cron from "node-cron";
 import { MedGas } from "../model/medgas.model";
 import { EType } from "../store/enum/type.enum";
-import chromium from "chrome-aws-lambda";
 
-export async function scrapePricingData() {
+async function scrapePricingData() {
     try {
         const url = "https://snowtrace.io";
-        // const browser = await puppeteer.launch();
-        const browser = await chromium.puppeteer.launch({
-            args: [
-                ...chromium.args,
-                "--hide-scrollbars",
-                "--disable-web-security",
-            ],
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath,
-            headless: true,
-            ignoreHTTPSErrors: true,
-        });
+        const browser = await puppeteer.launch();
+
         const page = await browser.newPage();
 
         await page.goto(url, { waitUntil: "networkidle0" });
@@ -88,7 +77,7 @@ export async function savePricingData(type: EType) {
 }
 
 export async function runCron() {
-    cron.schedule("*/3 * * * *", () => {
+    cron.schedule("*/30 * * * *", () => {
         savePricingData(EType.CRON);
     });
 }

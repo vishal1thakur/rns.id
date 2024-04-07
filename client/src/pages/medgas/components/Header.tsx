@@ -12,17 +12,18 @@ const Header = ({ gasData, refetchAllGas }: any) => {
     const { data: currentGasData } = useQuery({
         queryKey: ["currentGasData"],
         queryFn: () =>
-            fetch(`https://rns-id.vercel.app/medgas/fetchCurrent`).then((res) =>
-                res.json()
+            fetch(`${import.meta.env.VITE_DEV_URL}/medgas/fetchCurrent`).then(
+                (res) => res.json()
             ),
-        enabled: fetchCurrent,
+        enabled: fetchCurrent && import.meta.env.ENVIRONMENT === "DEV",
     });
+
     useEffect(() => {
         const updateTimer = () => {
             const createdAt = new Date(gasData?.lastCronEntry?.createdAt);
             const now: any = new Date();
 
-            const nextFetch: any = new Date(createdAt.getTime() + 3 * 60000); // 30 minutes in milliseconds
+            const nextFetch: any = new Date(createdAt.getTime() + 30 * 60000); // 30 minutes in milliseconds
             const diff = nextFetch - now;
 
             if (diff > 0) {
@@ -36,8 +37,12 @@ const Header = ({ gasData, refetchAllGas }: any) => {
                     }${seconds} mins`
                 );
             } else {
-                // Handle case where the next fetch time has passed
-                setNextFetchIn("Fetching Current Price...");
+                // Adding case for when the server is started with the client, in this case the first cron job will take 30 mins, so it will show Waiting For Server...
+                setNextFetchIn(
+                    diff < 0 && diff > -1000
+                        ? "Fetching Current Price..."
+                        : "Waiting For Server..."
+                );
                 refetchAllGas();
             }
         };
@@ -72,22 +77,24 @@ const Header = ({ gasData, refetchAllGas }: any) => {
                     {nextFetchIn}
                 </h2>
             </div>
-            <div className="flex space-x-8">
-                {fetchCurrent ? (
-                    <h2 className="text-md text-white font-semibold">
-                        Fetching Current Price...
-                    </h2>
-                ) : (
-                    <Button
-                        className="bg-white hover:bg-white text-[#0355BF] font-semibold"
-                        onClick={() => {
-                            setFetchCurrent(true);
-                        }}
-                    >
-                        Fetch Current Price
-                    </Button>
-                )}
-            </div>
+            {import.meta.env.VITE_ENVIRONMENT === "DEV" && (
+                <div className="flex space-x-8">
+                    {fetchCurrent ? (
+                        <h2 className="text-md text-white font-semibold">
+                            Fetching Current Price...
+                        </h2>
+                    ) : (
+                        <Button
+                            className="bg-white hover:bg-white text-[#0355BF] font-semibold"
+                            onClick={() => {
+                                setFetchCurrent(true);
+                            }}
+                        >
+                            Fetch Current Price
+                        </Button>
+                    )}
+                </div>
+            )}
         </header>
     );
 };
